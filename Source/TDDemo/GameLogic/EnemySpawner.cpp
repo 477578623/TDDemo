@@ -8,7 +8,8 @@
 
 //GetWorld需要引入Engine/World头文件
 #include "Engine/World.h"
-
+//FTimerManager
+#include "TimerManager.h"
 
 // Sets default values
 AEnemySpawner::AEnemySpawner()
@@ -23,10 +24,6 @@ void AEnemySpawner::BeginPlay()
 {
 	
 	Super::BeginPlay();
-
-	
-	
-
 	SpawnEnemy();
 	
 }
@@ -38,20 +35,32 @@ void AEnemySpawner::Tick(float DeltaTime)
 
 }
 
+//放函数里不行？ 
+int cnt = 0;
 void AEnemySpawner::SpawnEnemy()
 {
 	if (Wave < EnemyArr.Num())
 	{
-		//创建敌人
-
-		TSubclassOf<AActor> Enemy = EnemyArr[Wave++];
-		AActor *EnemyActor = GetWorld()->SpawnActor<AActor>(Enemy, GetActorLocation(), GetActorRotation());
 		
-		ABaseEnemy *BaseEnemy = Cast<ABaseEnemy>(EnemyActor);
-		if (BaseEnemy)
-		{
-			BaseEnemy->setTargetPoint(InitPoint);
-		}
+		//创建敌人
+		auto CreateEnemy = [&]() {
+			TSubclassOf<AActor> Enemy = EnemyArr[Wave];
+			AActor *EnemyActor = GetWorld()->SpawnActor<AActor>(Enemy, GetActorLocation(), GetActorRotation());
+
+			ABaseEnemy *BaseEnemy = Cast<ABaseEnemy>(EnemyActor);
+			if (BaseEnemy)
+			{
+				BaseEnemy->setTargetPoint(InitPoint);
+			}
+			++cnt;
+			if (cnt >= 10) 
+			{
+				GetWorldTimerManager().ClearTimer(SpawnEnemyTimerHandle);
+			}
+		};
+		GetWorldTimerManager().SetTimer(SpawnEnemyTimerHandle, FTimerDelegate::CreateLambda(CreateEnemy), 1.0f, true);
+		//GetWorldTimerManager().ClearTimer(SpawnEnemyTimerHandle);
+		
 	}
 	
 }
