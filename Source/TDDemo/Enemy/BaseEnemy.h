@@ -19,6 +19,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	TSubclassOf<UDamageType> DamageTypeClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
+	float Speed;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

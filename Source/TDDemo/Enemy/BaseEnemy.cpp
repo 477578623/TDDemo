@@ -8,7 +8,7 @@
 
 
 // Sets default values
-ABaseEnemy::ABaseEnemy()
+ABaseEnemy::ABaseEnemy() : Speed(1600.0f)
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -55,15 +55,16 @@ void ABaseEnemy::moveToTarget(float DeltaTime)
 		//FString RotateStr = FString(LookAtYaw.ToString());
 		//UE_LOG(LogTemp, Warning, TEXT("rotate:%s"), *RotateStr);
 		//SetActorRotation(FMath::RInterpTo(GetActorRotation(), LookAtYaw, DeltaTime, 60.0f));
-
 		//TODO 此处应该有个缓冲的速度
 		SetActorRotation(LookAtYaw);
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Moving"))
+	//FString tmp = FString(string(Speed));
+	UE_LOG(LogTemp, Warning, TEXT("Moving:%f"), Speed)
 	if (TargetPoint)
 	{
 		FVector CurrentLocation = GetActorLocation();
-		FVector InterpLocation = FMath::VInterpConstantTo(CurrentLocation, TargetPoint->GetActorLocation(), DeltaTime, 1600.0f);
+		FVector InterpLocation = FMath::VInterpConstantTo(CurrentLocation, TargetPoint->GetActorLocation(), DeltaTime, Speed);
 		SetActorLocation(InterpLocation);
 	}
 
