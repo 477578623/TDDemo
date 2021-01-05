@@ -36,14 +36,14 @@ void AEnemySpawner::Tick(float DeltaTime)
 }
 
 //放函数里不行？ 
-int cnt = 0;
+
 void AEnemySpawner::SpawnEnemy()
 {
 	if (Wave < EnemyArr.Num())
 	{
 		
 		//创建敌人
-		auto CreateEnemy = [&]() {
+		auto CreateEnemy = [this]() {
 			TSubclassOf<AActor> Enemy = EnemyArr[Wave];
 			AActor *EnemyActor = GetWorld()->SpawnActor<AActor>(Enemy, GetActorLocation(), GetActorRotation());
 
@@ -52,8 +52,8 @@ void AEnemySpawner::SpawnEnemy()
 			{
 				BaseEnemy->setTargetPoint(InitPoint);
 			}
-			++cnt;
-			if (cnt >= 10) 
+			--cnt;
+			if (cnt <= 0) 
 			{
 				GetWorldTimerManager().ClearTimer(SpawnEnemyTimerHandle);
 			}

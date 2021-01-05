@@ -23,6 +23,8 @@ public:
 
 	FTimerHandle SpawnEnemyTimerHandle;
 
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -36,5 +38,7 @@ public:
 
 private:
 
+	// todo ∂¡≈‰÷√±Ì
 	int Wave = 0;
+	int cnt = 10;
 };
