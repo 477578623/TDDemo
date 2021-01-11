@@ -20,6 +20,9 @@ void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+
+	//TODO 
 }
 
 // Called every frame

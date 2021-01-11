@@ -19,6 +19,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	TSubclassOf<UDamageType> DamageTypeClass;
 
+	//TODO ¼ÓÅö×²ºÐ
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Property")
 	float Speed;
 protected:
